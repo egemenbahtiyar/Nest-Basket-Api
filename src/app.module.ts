@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
-import { User } from './user/entitiy/user.entitiy';
+import { ProductModule } from './product/product.module';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -20,11 +21,18 @@ import { User } from './user/entitiy/user.entitiy';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       synchronize: true,
-      entities: [User],
+      autoLoadEntities: true,
     }),
     UserModule,
+    ProductModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
+    },
+  ],
 })
 export class AppModule {}

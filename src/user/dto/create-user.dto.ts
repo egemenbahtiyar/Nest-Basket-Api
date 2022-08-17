@@ -8,7 +8,7 @@ export class CreateUserDto {
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Email boş bırakılamaz.' })
-  @IsEmail()
+  @IsEmail({}, { message: 'Lütfen geçerli bir Email giriniz.' })
   readonly email: string;
 
   @ApiProperty()
