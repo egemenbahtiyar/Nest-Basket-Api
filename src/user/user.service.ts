@@ -21,4 +21,17 @@ export class UserService {
     });
     return await this.userRepository.save(newUser);
   }
+
+  async getUser(userId: number) {
+    return await this.userRepository.findOneBy({ id: userId });
+  }
+
+  async deleteUser(userId: number) {
+    const user = await this.userRepository.findOneBy({ id: userId });
+    return await this.userRepository.remove(user);
+  }
+
+  async getUsers() {
+    return await this.userRepository.find();
+  }
 }
