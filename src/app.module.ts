@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProductModule } from './product/product.module';
 import { APP_PIPE } from '@nestjs/core';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { APP_PIPE } from '@nestjs/core';
     }),
     UserModule,
     ProductModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [
