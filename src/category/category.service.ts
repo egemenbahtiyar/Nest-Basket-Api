@@ -26,4 +26,8 @@ export class CategoryService {
   async getCategories() {
     return await this.categoryRepository.find();
   }
+
+  async getCategoryById(catId: number) {
+    return await this.categoryRepository.findOneBy({ id: catId });
+  }
 }

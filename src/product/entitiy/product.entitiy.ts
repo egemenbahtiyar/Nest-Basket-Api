@@ -13,7 +13,7 @@ export class Product {
   price: number;
 
   @Column()
-  quantitiy: number;
+  stockNumber: number;
 
   @ManyToOne(() => Category, (category) => category.products)
   category: Category;

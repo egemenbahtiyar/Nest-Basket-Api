@@ -9,6 +9,8 @@ export class Category {
   @Column({ length: 25 })
   name: string;
 
-  @OneToMany(() => Product, (product) => product.category)
+  @OneToMany(() => Product, (product) => product.category, {
+    onDelete: 'CASCADE',
+  })
   products: Product[];
 }
