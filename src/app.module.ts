@@ -8,6 +8,7 @@ import { ProductModule } from './product/product.module';
 import { APP_PIPE } from '@nestjs/core';
 import { CategoryModule } from './category/category.module';
 import { OrderModule } from './order/order.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { OrderModule } from './order/order.module';
     ProductModule,
     CategoryModule,
     OrderModule,
+    CartModule,
   ],
   controllers: [AppController],
   providers: [

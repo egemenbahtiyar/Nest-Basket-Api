@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Category } from '../../category/entitiy/category.entitiy';
 import { OrderItem } from '../../order/entitiy/orderItem.entitiy';
+import { CartItem } from '../../cart/entitiy/cartItem.entitiy';
 
 @Entity()
 export class Product {
@@ -22,6 +23,9 @@ export class Product {
 
   @Column()
   stockNumber: number;
+
+  @OneToOne(() => CartItem, (cartItem) => cartItem.product)
+  cartItem: CartItem;
 
   @OneToOne(() => OrderItem, (orderItem) => orderItem.product)
   orderItem: OrderItem;
