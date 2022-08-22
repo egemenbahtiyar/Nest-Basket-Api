@@ -1,13 +1,13 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Order } from './order.entitiy';
 import { Product } from '../../product/entitiy/product.entitiy';
-import { JoinColumn } from 'typeorm/browser';
 
 @Entity()
 export class OrderItem {

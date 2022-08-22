@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Product } from '../../product/entitiy/product.entitiy';
 
 @Entity()
@@ -9,7 +9,7 @@ export class Category {
   @Column({ length: 25 })
   name: string;
 
-  @OneToMany(() => Product, (product) => product.category, {
+  @ManyToMany(() => Product, (product) => product.categories, {
     onDelete: 'CASCADE',
   })
   products: Product[];

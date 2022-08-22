@@ -19,5 +19,5 @@ export class UpdateProductDto {
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Kategori Idsi bırakılamaz.' })
-  categoryId: number;
+  categoryIds: number[];
 }

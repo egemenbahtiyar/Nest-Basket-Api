@@ -15,11 +15,12 @@ export class ProductService {
   ) {}
 
   async createProduct(dto: CreateProductDto) {
-    const category = await this.categoryService.getCategoryById(dto.categoryId);
+    const cats = await this.categoryService.getCategoriesByIds(dto.categoryIds);
+    console.log(cats);
     const product = await this.productRepository.create({
       name: dto.name,
       price: dto.price,
-      category: category,
+      categories: cats,
       stockNumber: dto.stockNumber,
     });
     return await this.productRepository.save(product);
@@ -42,13 +43,13 @@ export class ProductService {
     const product = await this.productRepository.findOneBy({
       id: dto.productId,
     });
-    const newCategory = await this.categoryService.getCategoryById(
-      dto.categoryId,
+    const newCategories = await this.categoryService.getCategoriesByIds(
+      dto.categoryIds,
     );
     product.name = dto.name;
     product.stockNumber = dto.stockNumber;
     product.price = dto.price;
-    product.category = newCategory;
+    product.categories = newCategories;
     return await this.productRepository.save(product);
   }
 }

@@ -30,4 +30,11 @@ export class CategoryService {
   async getCategoryById(catId: number) {
     return await this.categoryRepository.findOneBy({ id: catId });
   }
+
+  async getCategoriesByIds(catIds: number[]) {
+    return await this.categoryRepository
+      .createQueryBuilder('category')
+      .whereInIds(catIds)
+      .getMany();
+  }
 }

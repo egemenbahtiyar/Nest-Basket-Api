@@ -15,6 +15,6 @@ export class CreateProductDto {
   stockNumber: number;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'Kategori Idsi bırakılamaz.' })
-  categoryId: number;
+  @IsNotEmpty({ message: 'Kategori Idsi boş bırakılamaz.' })
+  categoryIds: number[];
 }
