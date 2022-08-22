@@ -1,34 +1,15 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  Param,
-  ParseIntPipe,
-  Post,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { CategoryService } from './category.service';
+import { Crud, CrudController } from '@nestjsx/crud';
+import { Category } from './entitiy/category.entitiy';
 import { CreateCategoryDto } from './dto/createCategory.dto';
 
+@Crud({
+  model: {
+    type: CreateCategoryDto,
+  },
+})
 @Controller('category')
-export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
-
-  @Post('createCategory')
-  @HttpCode(200)
-  async createCategory(@Body() dto: CreateCategoryDto) {
-    return await this.categoryService.createCategory(dto);
-  }
-
-  @Post('deleteCategory/:id')
-  @HttpCode(200)
-  async deleteCategory(@Param('id', new ParseIntPipe()) id) {
-    return await this.categoryService.deleteCategory(id);
-  }
-
-  @Get('getCategories')
-  @HttpCode(200)
-  async getCategories() {
-    return await this.categoryService.getCategories();
-  }
+export class CategoryController implements CrudController<Category> {
+  constructor(public service: CategoryService) {}
 }

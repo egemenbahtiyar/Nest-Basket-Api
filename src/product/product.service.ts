@@ -16,7 +16,6 @@ export class ProductService {
 
   async createProduct(dto: CreateProductDto) {
     const cats = await this.categoryService.getCategoriesByIds(dto.categoryIds);
-    console.log(cats);
     const product = await this.productRepository.create({
       name: dto.name,
       price: dto.price,

@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -13,16 +14,11 @@ export class CartItem {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 25 })
-  name: string;
-
   @Column()
-  price: number;
-
-  @Column()
-  stockNumber: number;
+  Quantity: number;
 
   @OneToOne(() => Product, (product) => product.cartItem)
+  @JoinColumn()
   product: Product;
 
   @ManyToOne(() => Cart, (cart) => cart.cartItems)
