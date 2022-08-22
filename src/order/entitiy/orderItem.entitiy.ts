@@ -1,4 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Order } from './order.entitiy';
+import { Product } from '../../product/entitiy/product.entitiy';
+import { JoinColumn } from 'typeorm/browser';
 
 @Entity()
 export class OrderItem {
@@ -10,4 +19,11 @@ export class OrderItem {
 
   @Column()
   price: number;
+
+  @OneToOne(() => Product, (product) => product.orderItem)
+  @JoinColumn()
+  product: Product;
+
+  @ManyToOne(() => Order, (order) => order.OrderItems)
+  order: Order;
 }
