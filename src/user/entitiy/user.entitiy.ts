@@ -8,6 +8,7 @@ import {
 import { Exclude } from 'class-transformer';
 import { Order } from '../../order/entitiy/order.entitiy';
 import { Cart } from '../../cart/entitiy/cart.entitiy';
+import { Evaluation } from '../../evaluation/entity/evaluation.entity';
 
 @Entity()
 export class User {
@@ -35,4 +36,7 @@ export class User {
 
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
+
+  @OneToOne(() => Evaluation, (evaluation) => evaluation.user)
+  evaluation: Evaluation;
 }

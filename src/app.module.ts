@@ -9,6 +9,7 @@ import { APP_PIPE } from '@nestjs/core';
 import { CategoryModule } from './category/category.module';
 import { OrderModule } from './order/order.module';
 import { CartModule } from './cart/cart.module';
+import { EvaluationModule } from './evaluation/evaluation.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { CartModule } from './cart/cart.module';
     CategoryModule,
     OrderModule,
     CartModule,
+    EvaluationModule,
   ],
   controllers: [AppController],
   providers: [
