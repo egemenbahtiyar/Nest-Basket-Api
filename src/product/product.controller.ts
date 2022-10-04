@@ -10,6 +10,7 @@ import {
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
+import { ApiParam } from '@nestjs/swagger';
 
 @Controller('product')
 export class ProductController {
@@ -21,6 +22,10 @@ export class ProductController {
   }
 
   @Get('getProduct/:id')
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+  })
   async getProductById(@Param('id', new ParseIntPipe()) id) {
     return await this.productService.getProductById(id);
   }
@@ -36,6 +41,10 @@ export class ProductController {
   }
 
   @Post('delete/:id')
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+  })
   @HttpCode(200)
   async deleteProduct(@Param('id', new ParseIntPipe()) id) {
     return await this.productService.deleteProduct(id);
