@@ -9,8 +9,6 @@ export class Category {
   @Column({ length: 25 })
   name: string;
 
-  @ManyToMany(() => Product, (product) => product.categories, {
-    onDelete: 'CASCADE',
-  })
+  @ManyToMany(() => Product, (product) => product.categories)
   products: Product[];
 }
