@@ -82,7 +82,7 @@ export class CartService {
     });
     const cartItem = await this.cartItemRepository.findOne({
       where: {
-        product: await this.productService.getProductById(dto.productId),
+        product: Equal(await this.productService.getProductById(dto.productId)),
         cart: Equal(userCart),
       },
     });

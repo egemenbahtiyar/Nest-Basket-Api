@@ -19,19 +19,13 @@ export class Cart {
 
   @OneToMany(() => CartItem, (cartItem) => cartItem.cart)
   cartItems: CartItem[];
-  /*
-  @Column()
-  totalPrice: number = getSum(this);*/
-}
 
-/*
-function getSum(cart: Cart) {
-  console.log(cart.cartItems);
-  if (cart.cartItems == null) {
-    return 51;
+  getTotalPrice() {
+    if (this.cartItems == null) {
+      return 0;
+    }
+    let sum = 0;
+    this.cartItems.forEach((a) => (sum += a.product.price));
+    return sum;
   }
-  let sum = 0;
-  cart.cartItems.forEach((a) => (sum += a.product.price));
-  return sum;
 }
-*/
