@@ -5,10 +5,10 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Exclude } from 'class-transformer';
 import { Order } from '../../order/entitiy/order.entitiy';
 import { Cart } from '../../cart/entitiy/cart.entitiy';
 import { Evaluation } from '../../evaluation/entity/evaluation.entity';
+import { Role } from '../enums/role.enum';
 
 @Entity()
 export class User {
@@ -22,7 +22,6 @@ export class User {
   email: string;
 
   @Column({ length: 100, select: false })
-  @Exclude()
   password: string;
 
   @Column('date')
@@ -30,6 +29,13 @@ export class User {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @Column({
+    type: 'set',
+    enum: Role,
+    default: [Role.USER],
+  })
+  roles: Role[];
 
   @OneToOne(() => Cart, (cart) => cart.user)
   cart: Cart;

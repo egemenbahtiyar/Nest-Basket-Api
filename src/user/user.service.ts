@@ -3,6 +3,8 @@ import { Repository } from 'typeorm';
 import { User } from './entitiy/user.entitiy';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
+import { compare, hash } from 'bcrypt';
+import { Equals } from 'class-validator';
 
 @Injectable()
 export class UserService {
@@ -17,7 +19,7 @@ export class UserService {
       isActive: dto.isActive,
       birthday: dto.birthday,
       email: dto.email,
-      password: dto.password,
+      password: await hash(dto.password, 10),
     });
     return await this.userRepository.save(newUser);
   }
@@ -33,5 +35,16 @@ export class UserService {
 
   async getUsers() {
     return await this.userRepository.find();
+  }
+
+  async findForEmail(email: string) {
+    const user = await this.userRepository.findOneBy({
+      email: email,
+    });
+    return user;
+  }
+
+  public async validateCredentials(user: User, password: string) {
+    return await compare(password, user.password);
   }
 }

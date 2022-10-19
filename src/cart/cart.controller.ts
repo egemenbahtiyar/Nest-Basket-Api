@@ -2,7 +2,9 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { AddProductToCartDto } from './dto/addProductToCart.dto';
 import { UpdateProductToCartDto } from './dto/updateProductToCart.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Cart')
 @Controller('cart')
 export class CartController {
   constructor(public service: CartService) {}

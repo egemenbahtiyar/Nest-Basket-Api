@@ -10,6 +10,7 @@ import { CategoryModule } from './category/category.module';
 import { OrderModule } from './order/order.module';
 import { CartModule } from './cart/cart.module';
 import { EvaluationModule } from './evaluation/evaluation.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { EvaluationModule } from './evaluation/evaluation.module';
     OrderModule,
     CartModule,
     EvaluationModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [

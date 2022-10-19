@@ -1,21 +1,32 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
   ParseIntPipe,
   Post,
+  Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
-import { ApiParam } from '@nestjs/swagger';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../user/enums/role.enum';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-guard';
+import { Public } from '../auth/decorators/public.decorator';
 
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('product')
+@ApiTags('Product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Public()
   @Get('getAll')
   async getAllProduct() {
     return await this.productService.getProducts();
@@ -35,12 +46,13 @@ export class ProductController {
     return await this.productService.createProduct(dto);
   }
 
-  @Post('update')
+  @Put()
   async updateProduct(@Body() dto: UpdateProductDto) {
     return await this.productService.updateProduct(dto);
   }
 
-  @Post('delete/:id')
+  @Roles(Role.ADMIN)
+  @Delete('delete/:id')
   @ApiParam({
     name: 'id',
     type: 'number',
