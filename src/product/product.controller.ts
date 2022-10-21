@@ -13,7 +13,7 @@ import {
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../user/enums/role.enum';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -21,6 +21,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-guard';
 import { Public } from '../auth/decorators/public.decorator';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
+@ApiBearerAuth()
 @Controller('product')
 @ApiTags('Product')
 export class ProductController {

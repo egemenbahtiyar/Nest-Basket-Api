@@ -23,8 +23,7 @@ export class CartService {
     this.cartRepository = this.dataSource.getRepository(Cart);
   }
 
-  async addProductToCart(dto: AddProductToCartDto) {
-    const user = await this.userService.getUser(dto.userId);
+  async addProductToCart(dto: AddProductToCartDto, userId: number) {
     const userCart = await this.cartRepository.findOne({
       relations: {
         cartItems: {
@@ -32,14 +31,13 @@ export class CartService {
         },
       },
       where: {
-        user: Equal(user),
+        user: Equal(await this.userService.getUser(userId)),
       },
     });
-
     //If cart is null create new cart for user
     if (userCart == null) {
       const cart = this.cartRepository.create({
-        user: await this.userService.getUser(dto.userId),
+        user: await this.userService.getUser(userId),
       });
       await this.cartRepository.save(cart);
       const cartItem = this.cartItemRepository.create({
@@ -50,7 +48,6 @@ export class CartService {
       await this.cartItemRepository.save(cartItem);
     }
     const product = await this.productService.getProductById(dto.productId);
-    console.log(userCart);
     userCart.cartItems.forEach((x) => x.product.name);
 
     //If same product already exists in cart increment count.
@@ -68,8 +65,7 @@ export class CartService {
     return await this.cartItemRepository.save(cartItem);
   }
 
-  async UpdateProductFromCart(dto: UpdateProductToCartDto) {
-    const user = await this.userService.getUser(dto.userId);
+  async UpdateProductFromCart(dto: UpdateProductToCartDto, userId: number) {
     const userCart = await this.cartRepository.findOne({
       relations: {
         cartItems: {
@@ -77,7 +73,7 @@ export class CartService {
         },
       },
       where: {
-        user: Equal(user),
+        user: Equal(await this.userService.getUser(userId)),
       },
     });
     const cartItem = await this.cartItemRepository.findOne({
