@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -43,7 +44,7 @@ export class UserController {
     return await this.userService.getUser(id);
   }
 
-  @Post('deleteUser/:id')
+  @Delete('deleteUser/:id')
   @ApiParam({
     name: 'id',
     type: 'number',
