@@ -38,9 +38,9 @@ export class ProductService {
     return await this.productRepository.remove(product);
   }
 
-  async updateProduct(dto: UpdateProductDto) {
+  async updateProduct(productId: number, dto: UpdateProductDto) {
     const product = await this.productRepository.findOneBy({
-      id: dto.productId,
+      id: productId,
     });
     const newCategories = await this.categoryService.getCategoriesByIds(
       dto.categoryIds,

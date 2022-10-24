@@ -3,14 +3,34 @@ import { CategoryService } from './category.service';
 import { Crud, CrudController } from '@nestjsx/crud';
 import { Category } from './entitiy/category.entitiy';
 import { CreateCategoryDto } from './dto/createCategory.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { UpdateCategoryDto } from './dto/updateCategory.dto';
 
+@ApiTags('Category')
+@ApiBearerAuth()
 @Crud({
   model: {
-    type: CreateCategoryDto,
+    type: Category,
+  },
+  dto: {
+    create: CreateCategoryDto,
+    update: UpdateCategoryDto,
+  },
+  query: {
+    alwaysPaginate: true,
+    limit: 10,
+    maxLimit: 100,
+  },
+  routes: {
+    only: [
+      'getOneBase',
+      'getManyBase',
+      'deleteOneBase',
+      'updateOneBase',
+      'createOneBase',
+    ],
   },
 })
-@ApiTags('Category')
 @Controller('category')
 export class CategoryController implements CrudController<Category> {
   constructor(public service: CategoryService) {}
