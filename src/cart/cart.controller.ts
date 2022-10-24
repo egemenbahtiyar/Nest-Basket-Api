@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Patch, Post, UseGuards } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { AddProductToCartDto } from './dto/addProductToCart.dto';
 import { UpdateProductToCartDto } from './dto/updateProductToCart.dto';
@@ -22,7 +22,7 @@ export class CartController {
     return await this.service.addProductToCart(dto, user.id);
   }
 
-  @Put('updateProductFromCart')
+  @Patch('updateProductFromCart')
   async updateProductFromCart(
     @Body() dto: UpdateProductToCartDto,
     @CurrentUser() user,

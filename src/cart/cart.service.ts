@@ -77,16 +77,20 @@ export class CartService {
       },
     });
     const cartItem = await this.cartItemRepository.findOne({
+      relations: {
+        cart: true,
+        product: true,
+      },
       where: {
         product: Equal(await this.productService.getProductById(dto.productId)),
         cart: Equal(userCart),
       },
     });
     cartItem.Quantity = dto.quantity;
-    await this.cartItemRepository.save(cartItem);
     //If quantity equals zero delete item from cart
     if (cartItem.Quantity == 0) {
-      await this.cartItemRepository.remove(cartItem);
+      return await this.cartItemRepository.remove(cartItem);
     }
+    return await this.cartItemRepository.save(cartItem);
   }
 }
