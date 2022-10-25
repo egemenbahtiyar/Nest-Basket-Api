@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from '../../user/entitiy/user.entitiy';
 import { Product } from '../../product/entitiy/product.entitiy';
 
@@ -19,11 +13,9 @@ export class Evaluation {
   @Column()
   comment: string;
 
-  @OneToOne(() => User, (user) => user.evaluation)
-  @JoinColumn()
+  @ManyToOne(() => User, (user) => user.evaluations)
   user: User;
 
-  @OneToOne(() => Product, (product) => product.evaluation)
-  @JoinColumn()
+  @ManyToOne(() => Product, (product) => product.evaluations)
   product: Product;
 }

@@ -43,6 +43,6 @@ export class User {
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
 
-  @OneToOne(() => Evaluation, (evaluation) => evaluation.user)
-  evaluation: Evaluation;
+  @OneToMany(() => Evaluation, (evaluation) => evaluation.user)
+  evaluations: Evaluation[];
 }

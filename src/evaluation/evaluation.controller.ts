@@ -24,6 +24,11 @@ import { JwtAuthGuard } from '../auth/guards/jwt-guard';
     alwaysPaginate: true,
     limit: 5,
     maxLimit: 100,
+    join: {
+      user: {
+        eager: true,
+      },
+    },
   },
   routes: {
     only: [

@@ -3,6 +3,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -35,6 +36,6 @@ export class Product {
   @JoinTable()
   categories: Category[];
 
-  @OneToOne(() => Evaluation, (evaluation) => evaluation.product)
-  evaluation: Evaluation;
+  @OneToMany(() => Evaluation, (evaluation) => evaluation.product)
+  evaluations: Evaluation[];
 }
