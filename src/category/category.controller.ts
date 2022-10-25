@@ -18,7 +18,7 @@ import { UpdateCategoryDto } from './dto/updateCategory.dto';
   },
   query: {
     alwaysPaginate: true,
-    limit: 10,
+    limit: 5,
     maxLimit: 100,
   },
   routes: {
