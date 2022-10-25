@@ -39,16 +39,28 @@ export class ProductService {
   }
 
   async updateProduct(productId: number, dto: UpdateProductDto) {
-    const product = await this.productRepository.findOneBy({
-      id: productId,
+    const product = await this.productRepository.findOne({
+      relations: {
+        categories: true,
+      },
+      where: {
+        id: productId,
+      },
     });
-    const newCategories = await this.categoryService.getCategoriesByIds(
-      dto.categoryIds,
-    );
-    product.name = dto.name;
-    product.stockNumber = dto.stockNumber;
-    product.price = dto.price;
-    product.categories = newCategories;
-    return await this.productRepository.save(product);
+
+    if (dto.categoryIds) {
+      const newCategories = await this.categoryService.getCategoriesByIds(
+        dto.categoryIds,
+      );
+      const newProduct = Object.assign(product, dto, {
+        categories: newCategories,
+      });
+      return await this.productRepository.save(newProduct);
+    } else {
+      const newProduct = Object.assign(product, dto, {
+        categories: product.categories,
+      });
+      return await this.productRepository.save(newProduct);
+    }
   }
 }
