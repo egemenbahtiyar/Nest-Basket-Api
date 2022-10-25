@@ -1,6 +1,13 @@
 import { Controller, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Crud, Override, ParsedBody } from '@nestjsx/crud';
+import {
+  Crud,
+  CrudController,
+  CrudRequest,
+  Override,
+  ParsedBody,
+  ParsedRequest,
+} from '@nestjsx/crud';
 import { Evaluation } from './entity/evaluation.entity';
 import { CreateEvaluationDto } from './dto/createEvaluation.dto';
 import { UpdateEvaluationDto } from './dto/updateEvaluation.dto';
@@ -24,11 +31,6 @@ import { JwtAuthGuard } from '../auth/guards/jwt-guard';
     alwaysPaginate: true,
     limit: 5,
     maxLimit: 100,
-    join: {
-      user: {
-        eager: true,
-      },
-    },
   },
   routes: {
     only: [
@@ -44,6 +46,10 @@ import { JwtAuthGuard } from '../auth/guards/jwt-guard';
 export class EvaluationController {
   constructor(public service: EvaluationService) {}
 
+  get base(): CrudController<Evaluation> {
+    return this;
+  }
+
   @Override()
   async createOne(
     @ParsedBody() dto: CreateEvaluationDto,
@@ -55,7 +61,12 @@ export class EvaluationController {
       productId: dto.productId,
       user: currentUser,
     };
-
     return await this.service.create(data);
+  }
+
+  @Override()
+  async deleteOne(@ParsedRequest() req: CrudRequest) {
+    await this.base.deleteOneBase(req);
+    return { status: 'deleted' };
   }
 }
