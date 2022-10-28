@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
@@ -47,7 +48,19 @@ export class ProductController {
     return await this.productService.createProduct(dto);
   }
 
-  @Patch('update/:id')
+  @Patch('patchProduct/:id')
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+  })
+  async patchProduct(
+    @Param('id', new ParseIntPipe()) id,
+    @Body() dto: UpdateProductDto,
+  ) {
+    return await this.productService.patchProduct(id, dto);
+  }
+
+  @Put('updateProduct/:id')
   @ApiParam({
     name: 'id',
     type: 'number',

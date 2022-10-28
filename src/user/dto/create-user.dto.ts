@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateUserDto {
   @ApiProperty()
   @IsNotEmpty({ message: 'İsim boş bırakılamaz.' })
-  readonly fullname: string;
+  readonly fullName: string;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Email boş bırakılamaz.' })

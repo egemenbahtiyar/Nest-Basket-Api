@@ -38,7 +38,7 @@ export class ProductService {
     return await this.productRepository.remove(product);
   }
 
-  async updateProduct(productId: number, dto: UpdateProductDto) {
+  async patchProduct(productId: number, dto: UpdateProductDto) {
     const product = await this.productRepository.findOne({
       relations: {
         categories: true,
@@ -62,5 +62,17 @@ export class ProductService {
       });
       return await this.productRepository.save(newProduct);
     }
+  }
+
+  async updateProduct(productId: number, dto: UpdateProductDto) {
+    const product = new Product();
+    product.id = productId;
+    product.name = dto.name;
+    product.price = dto.price;
+    product.stockNumber = dto.stockNumber;
+    product.categories = await this.categoryService.getCategoriesByIds(
+      dto.categoryIds,
+    );
+    return await this.productRepository.save(product);
   }
 }

@@ -7,6 +7,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -14,14 +15,12 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { Roles } from '../auth/decorators/roles.decorator';
-import { Role } from './enums/role.enum';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @ApiTags('User')
 @ApiBearerAuth()
 @Controller('user')
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(Role.ADMIN)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -42,6 +41,18 @@ export class UserController {
   })
   async getUserById(@Param('id', new ParseIntPipe()) id) {
     return await this.userService.getUser(id);
+  }
+
+  @Put('updateUser/:id')
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+  })
+  async updateUser(
+    @Param('id', new ParseIntPipe()) id,
+    @Body() dto: UpdateUserDto,
+  ) {
+    return await this.userService.updateUser(id, dto);
   }
 
   @Delete('deleteUser/:id')

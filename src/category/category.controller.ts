@@ -15,6 +15,7 @@ import { UpdateCategoryDto } from './dto/updateCategory.dto';
   dto: {
     create: CreateCategoryDto,
     update: UpdateCategoryDto,
+    replace: UpdateCategoryDto,
   },
   query: {
     alwaysPaginate: true,
@@ -28,6 +29,7 @@ import { UpdateCategoryDto } from './dto/updateCategory.dto';
       'deleteOneBase',
       'updateOneBase',
       'createOneBase',
+      'replaceOneBase',
     ],
   },
 })

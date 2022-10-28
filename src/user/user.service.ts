@@ -4,7 +4,7 @@ import { User } from './entitiy/user.entitiy';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare, hash } from 'bcrypt';
-import { Equals } from 'class-validator';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -15,7 +15,7 @@ export class UserService {
 
   async createUser(dto: CreateUserDto) {
     const newUser = this.userRepository.create({
-      fullName: dto.fullname,
+      fullName: dto.fullName,
       isActive: dto.isActive,
       birthday: dto.birthday,
       email: dto.email,
@@ -42,6 +42,12 @@ export class UserService {
       email: email,
     });
     return user;
+  }
+
+  async updateUser(id: number, dto: UpdateUserDto) {
+    const newEntity = Object.assign({ id: id }, dto);
+    console.log(newEntity);
+    return await this.userRepository.save(newEntity);
   }
 
   public async validateCredentials(user: User, password: string) {
